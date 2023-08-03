@@ -1,0 +1,22 @@
+:PROPERTIES:
+:ID:       bf85fbfa-2d30-46b9-818f-ddf81bf5cef0
+:END:
+#+title: Haskell
+
+* 学习资源
+** 电子书
+[[http://cnhaskell.com/][Real World Haskell]]
+
+* 编程环境
+** GHC
+主要由三部分组成：
+- ghc
+  生成本地原生代码的编译器
+- ghci
+  交互式的解释器和调试器
+- runghc
+  以脚本方式运行程序
+
+* 学习笔记
+** 电子书
+[[id:a70bb037-3d4c-4472-b628-5b7e97c6988f][Real World Haskell 学习笔记]]

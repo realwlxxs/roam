@@ -1,0 +1,176 @@
+:PROPERTIES:
+:ID:       a70bb037-3d4c-4472-b628-5b7e97c6988f
+:END:
+#+title: Real World Haskell 学习笔记
+
+[[http://cnhaskell.com/][在线阅读]]
+
+* 章节目录
+** 第 1 章：入门
+*** 基本算术运算
+#+begin_src haskell
+2 + 2
+#+end_src
+
+#+RESULTS:
+: 4
+
+等价于：
+
+#+begin_src haskell
+(+) 2 2
+#+end_src
+
+#+RESULTS:
+: 4
+
+值得注意的是乘方：
+
+#+begin_src haskell
+313 ^ 15
+#+end_src
+
+#+RESULTS:
+: 27112218957718876716220410905036741257
+
+由于支持用户自定义操作符，负数通常需要加括号才能参与运算：
+
+#+begin_src haskell
+2 * (-3)
+#+end_src
+
+#+RESULTS:
+: -6
+
+*** 逻辑运算和值比较
+基本和 C 语言类似，除了“不等于”和逻辑非：
+
+#+begin_src haskell
+1 /= 1
+#+end_src
+
+#+RESULTS:
+: False
+
+和：
+
+#+begin_src haskell
+not True
+#+end_src
+
+#+RESULTS:
+: False
+
+*** 运算符的优先级和结合性
+操作符有优先级值，从 1 表示最低级，到 9 表示最高级。
+结合性决定连续使用某操作符应该从左向右还是从右向左运算。
+在 ghci 中查看操作符的优先级和结合性：
+
+#+begin_src haskell
+:info (+)
+#+end_src
+
+#+RESULTS:
+: type Num :: * -> Constraint
+: class Num a where
+:   (+) :: a -> a -> a
+:   ...
+:   	-- Defined in ‘GHC.Num’
+: infixl 6 +
+
+*** 在 ghci 中定义变量
+#+begin_src haskell
+let e = exp 1
+(e ** pi) - pi
+#+end_src
+
+#+RESULTS:
+: 19.99909997918947
+
+这里用了 =**= 运算符，和 =^= 的区别在于前者以浮点数为指数。
+
+*** 列表
+列表所有的元素都是相同类型的：
+
+#+begin_src haskell
+[1, 2, 3]
+#+end_src
+
+#+RESULTS:
+| 1 | 2 | 3 |
+
+用列举符号生成列表：
+
+#+begin_src haskell
+[1..10]
+#+end_src
+
+#+RESULTS:
+| 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 |
+
+用头两个元素确定步长：
+
+#+begin_src haskell
+[1,4..15]
+#+end_src
+
+#+RESULTS:
+| 1 | 4 | 7 | 10 | 13 |
+
+小心浮点数，以下代码实际列举了 =1.0= 到 =1.8+0.5= 的数：
+
+#+begin_src haskell
+[1.0..1.8]
+#+end_src
+
+#+RESULTS:
+| 1.0 | 2.0 |
+
+*** 列表操作符
+连接两个列表：
+
+#+begin_src haskell
+[] ++ [3,1,3] ++ [3,7]
+#+end_src
+
+#+RESULTS:
+| 3 | 1 | 3 | 3 | 7 |
+
+头插一个元素：
+
+#+begin_src haskell
+1 : 2 : [2,3]
+#+end_src
+
+#+RESULTS:
+| 1 | 2 | 2 | 3 |
+
+*** 字符串和字符
+打印字符串：
+
+#+begin_src haskell
+putStrLn "Here's a newline -->\n<-- See?"
+#+end_src
+
+#+RESULTS:
+: Here's a newline -->
+: <-- See?
+
+字符串是字符列表：
+
+#+begin_src haskell
+['h','a'] == "ha" && "" == []
+#+end_src
+
+#+RESULTS:
+: True
+
+*** 类型签名
+使用 =:type= 查看表达式类型：
+
+#+begin_src haskell
+:type 3 + 2
+#+end_src
+
+#+RESULTS:
+: 3 + 2 :: Num a => a
