@@ -8,7 +8,7 @@
 * 章节目录
 ** 第 1 章：入门
 *** 基本算术运算
-#+begin_src haskell
+#+begin_src haskell :results verbatim
 2 + 2
 #+end_src
 
@@ -17,7 +17,7 @@
 
 等价于：
 
-#+begin_src haskell
+#+begin_src haskell :results verbatim
 (+) 2 2
 #+end_src
 
@@ -26,7 +26,7 @@
 
 值得注意的是乘方：
 
-#+begin_src haskell
+#+begin_src haskell :results verbatim
 313 ^ 15
 #+end_src
 
@@ -35,7 +35,7 @@
 
 由于支持用户自定义操作符，负数通常需要加括号才能参与运算：
 
-#+begin_src haskell
+#+begin_src haskell :results verbatim
 2 * (-3)
 #+end_src
 
@@ -45,7 +45,7 @@
 *** 逻辑运算和值比较
 基本和 C 语言类似，除了“不等于”和逻辑非：
 
-#+begin_src haskell
+#+begin_src haskell :results verbatim
 1 /= 1
 #+end_src
 
@@ -54,7 +54,7 @@
 
 和：
 
-#+begin_src haskell
+#+begin_src haskell :results verbatim
 not True
 #+end_src
 
@@ -66,7 +66,7 @@ not True
 结合性决定连续使用某操作符应该从左向右还是从右向左运算。
 在 ghci 中查看操作符的优先级和结合性：
 
-#+begin_src haskell
+#+begin_src haskell :results verbatim
 :info (+)
 #+end_src
 
@@ -79,7 +79,7 @@ not True
 : infixl 6 +
 
 *** 在 ghci 中定义变量
-#+begin_src haskell
+#+begin_src haskell :results verbatim
 let e = exp 1
 (e ** pi) - pi
 #+end_src
@@ -92,63 +92,63 @@ let e = exp 1
 *** 列表
 列表所有的元素都是相同类型的：
 
-#+begin_src haskell
+#+begin_src haskell :results verbatim
 [1, 2, 3]
 #+end_src
 
 #+RESULTS:
-| 1 | 2 | 3 |
+: [1,2,3]
 
 用列举符号生成列表：
 
-#+begin_src haskell
+#+begin_src haskell :results verbatim
 [1..10]
 #+end_src
 
 #+RESULTS:
-| 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 |
+: [1,2,3,4,5,6,7,8,9,10]
 
 用头两个元素确定步长：
 
-#+begin_src haskell
+#+begin_src haskell :results verbatim
 [1,4..15]
 #+end_src
 
 #+RESULTS:
-| 1 | 4 | 7 | 10 | 13 |
+: [1,4,7,10,13]
 
 小心浮点数，以下代码实际列举了 =1.0= 到 =1.8+0.5= 的数：
 
-#+begin_src haskell
+#+begin_src haskell :results verbatim
 [1.0..1.8]
 #+end_src
 
 #+RESULTS:
-| 1.0 | 2.0 |
+: [1.0,2.0]
 
 *** 列表操作符
 连接两个列表：
 
-#+begin_src haskell
+#+begin_src haskell :results verbatim
 [] ++ [3,1,3] ++ [3,7]
 #+end_src
 
 #+RESULTS:
-| 3 | 1 | 3 | 3 | 7 |
+: [3,1,3,3,7]
 
 头插一个元素：
 
-#+begin_src haskell
+#+begin_src haskell :results verbatim
 1 : 2 : [2,3]
 #+end_src
 
 #+RESULTS:
-| 1 | 2 | 2 | 3 |
+: [1,2,2,3]
 
 *** 字符串和字符
 打印字符串：
 
-#+begin_src haskell
+#+begin_src haskell :results verbatim
 putStrLn "Here's a newline -->\n<-- See?"
 #+end_src
 
@@ -158,7 +158,7 @@ putStrLn "Here's a newline -->\n<-- See?"
 
 字符串是字符列表：
 
-#+begin_src haskell
+#+begin_src haskell :results verbatim
 ['h','a'] == "ha" && "" == []
 #+end_src
 
@@ -168,9 +168,87 @@ putStrLn "Here's a newline -->\n<-- See?"
 *** 类型签名
 使用 =:type= 查看表达式类型：
 
-#+begin_src haskell
+#+begin_src haskell :results verbatim
 :type 3 + 2
 #+end_src
 
 #+RESULTS:
 : 3 + 2 :: Num a => a
+
+** 第 2 章：类型和函数
+*** 常用基本类型
+- =Char=
+  单个字符
+- =Bool=
+  布尔类型
+- =Int=
+  带符号定长整数类型
+- =Integer=
+  带符号不定长整数类型
+- =Double=
+  浮点数
+
+*** 复合数据类型：列表和元组
+=head= 函数取出列表第一个元素：
+
+#+begin_src haskell :results verbatim
+head [1, 2, 3]
+#+end_src
+
+#+RESULTS:
+: 1
+
+=tail= 函数取出剩余部分：
+
+#+begin_src haskell :results verbatim
+tail [1, 2, 3, 4]
+#+end_src
+
+#+RESULTS:
+: [2,3,4]
+
+和列表相反，元组长度固定，但可以包含不同类型的元素：
+
+#+begin_src haskell :results verbatim
+:t (True, "hello")
+#+end_src
+
+#+RESULTS:
+: (True, "hello") :: (Bool, String)
+
+类型 =()= 只有一个值：
+
+#+begin_src haskell :results verbatim
+:t ()
+#+end_src
+
+#+RESULTS:
+: () :: ()
+
+*** 处理列表和元组的函数
+=take= 函数返回列表前 =n= 个元素：
+
+#+begin_src haskell :results verbatim
+take 2 [1..5]
+#+end_src
+
+#+RESULTS:
+: [1,2]
+
+=drop= 函数返回剩余的部分：
+
+#+begin_src haskell :results verbatim
+drop 2 [1..5]
+#+end_src
+
+#+RESULTS:
+: [3,4,5]
+
+=fst= 函数和 =snd= 函数返回元组的第一个元素和第二个元素：
+
+#+begin_src haskell :results verbatim
+fst (1, 'a')
+#+end_src
+
+#+RESULTS:
+: 1
