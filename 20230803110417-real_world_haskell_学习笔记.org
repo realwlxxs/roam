@@ -252,3 +252,44 @@ fst (1, 'a')
 
 #+RESULTS:
 : 1
+
+*** 简单函数定义
+[[file:real_world_haskell/ch02/add.hs][add.hs]]
+
+#+begin_src haskell :results output :dir real_world_haskell/ch02
+:l add.hs
+add 1 2
+add 111 222
+#+end_src
+
+#+RESULTS:
+: [1 of 1] Compiling Main             ( add.hs, interpreted )
+: Ok, one module loaded.
+: 3
+: 333
+
+*** 变量
+变量不允许重复绑定。
+
+*** 条件求值
+[[file:real_world_haskell/ch02/myDrop.hs][myDrop.hs]]
+
+#+begin_src haskell :results output :dir real_world_haskell/ch02
+:l myDrop.hs
+myDrop 2 "foobar"
+myDrop 4 "foobar"
+myDrop 4 [1, 2]
+myDrop 0 [1, 2]
+myDrop 7 []
+myDrop (-2) "foo"
+#+end_src
+
+#+RESULTS:
+: [1 of 1] Compiling Main             ( myDrop.hs, interpreted )
+: Ok, one module loaded.
+: obar
+: ar
+: []
+: [1,2]
+: []
+: foo
